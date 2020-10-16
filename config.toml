@@ -98,8 +98,8 @@ disqusShortname = ""
       url = "blogs/aliquam"
 
     [[params.tiles.showcase]]
-      title = "Tempus"
-      subtitle = "Feugiat Amet Tempus"
+      title = "Previous Projects"
+      subtitle = "Analysis"
       image = "pic02.jpg"
       url = "blogs/tempus"
 
