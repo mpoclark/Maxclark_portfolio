@@ -11,4 +11,4 @@ slug: CV
 title: CV
 ---
 
-Attached is an updated copy of my CV. Please contact if any questions.
+
