@@ -7,7 +7,7 @@ description: Past Projects
 draft: false
 image: LBS.jpg
 keywords: ""
-slug: magna
+slug: 
 title: Past Projects
 ---
 
