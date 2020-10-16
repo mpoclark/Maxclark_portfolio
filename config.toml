@@ -100,7 +100,7 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "Previous Projects"
       subtitle = "Analysis"
-      image = "pic02.jpg"
+      image = "CV Max Clark.pdf"
       url = "blogs/tempus"
 
     [[params.tiles.showcase]]
