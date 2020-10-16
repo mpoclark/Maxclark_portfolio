@@ -8,7 +8,7 @@ draft: false
 image:
 keywords: ""
 slug: magna
-title: Magna
+title: Past Projects
 ---
 
 ```{r, setup, echo=FALSE}
