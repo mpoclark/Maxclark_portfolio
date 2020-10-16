@@ -7,6 +7,6 @@ description: Attached is an updated copy of my CV. Please contact if any questio
 draft: false
 image: "CV.jpg"
 keywords: ""
-slug: 
+slug: aliquam
 title: CV
 ---
