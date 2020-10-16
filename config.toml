@@ -97,12 +97,6 @@ disqusShortname = ""
       image = "CV.jpg"
       url = "blogs/aliquam"
 
-   # [[params.tiles.showcase]]
-     # title = "Previous Projects"
-    #  subtitle = "Analysis"
-     # image = "CV Max Clark.pdf"
-    #  url = "blogs/"
-
     [[params.tiles.showcase]]
       title = "Past Projects"
       subtitle = "Examples of my coding in R"
