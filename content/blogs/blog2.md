@@ -5,7 +5,7 @@ categories:
 date: "2017-10-31T22:26:09-05:00"
 description: Past Projects
 draft: false
-image:
+image: LBS.jpg
 keywords: ""
 slug: magna
 title: Past Projects
