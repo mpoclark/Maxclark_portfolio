@@ -95,7 +95,7 @@ disqusShortname = ""
       title = "Overview"
       subtitle = "My CV"
       image = "CV Max Clark.pdf"
-      url = "blogs/Overview"
+      url = "blogs/aliquam"
 
     [[params.tiles.showcase]]
       title = "Previous Projects"
