@@ -94,7 +94,7 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "Overview"
       subtitle = "My CV"
-      image = CV.jpg
+      image = "CV.jpg"
       url = "blogs/aliquam"
 
    # [[params.tiles.showcase]]
@@ -104,8 +104,8 @@ disqusShortname = ""
     #  url = "blogs/"
 
     [[params.tiles.showcase]]
-      title = "Magna"
-      subtitle = "Lorem Etiam Nullam"
+      title = "Past Projects"
+      subtitle = "Examples of my coding in R"
       image = "pic10.jpg"
       url = "blogs/magna"
 
