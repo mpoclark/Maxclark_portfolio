@@ -1,7 +1,7 @@
 # Site settings
 baseURL = "https://mpoclark.netlify.app/"
 languageCode = "en-us"
-title = "Forty"
+title = "Max Clark"
 theme = "forty"
 
 # Enter your tracking code to enable Google Analytics
@@ -20,7 +20,7 @@ disqusShortname = ""
 
   # Provide your metadata here.
   name = "Max Clark"
-  description = "Your description"
+  description = "I am currently studying for an MFA at London Business School. Previously, I attended Durham University and worked in Private Equity for a year."
 
   # Link custom assets relative to /static
   custom_css = []
@@ -37,7 +37,7 @@ disqusShortname = ""
 
   # Navigation Section
   [params.navigation]
-    title = "Forty"
+    title = "Portfolio"
     subtitle = "By HTML5 Up"
     menu = "Menu"
     # Optional logo as brand stored in img/
@@ -51,13 +51,13 @@ disqusShortname = ""
       name = "Blogs"
       url = "blogs"
 
-    [[params.navigation.links]]
-      name = "Generic Blog"
-      url = "blogs/ipsum"
+     #[[params.navigation.links]]
+      # name = "Generic Blog"
+       #url = "blogs/ipsum"
 
-    [[params.navigation.links]]
-      name = "Elements"
-      url = "elements.html"
+     #[[params.navigation.links]]
+       #name = "Elements"
+       #url = "elements.html"
 
     # Add custom links here by uncommenting code below. To remove links just delete
     # the [[params.navigation.links]] map associated with that link. Copy and paste
@@ -72,9 +72,9 @@ disqusShortname = ""
       url = "blogs"
 
     # Button Style 2
-    [[params.navigation.button2]]
-      name = "Log In"
-      url = "#"
+     #[[params.navigation.button2]]
+       #name = "Log In"
+       #url = "#"
 
 
   # Banner section
@@ -82,7 +82,7 @@ disqusShortname = ""
     # To change the background image on the homepage banner, replace 'banner.jpg' in
     # the 'static/img' folder.
     title = "Hi, my name is Max Clark"
-    subtitle = "A RESPONSIVE SITE TEMPLATE DESIGNED BY HTML5 UP\nAND RELEASED UNDER THE CREATIVE COMMONS."
+    subtitle = "This is my portfolio website"
     buttonText = "Get Started"
 
 
@@ -94,7 +94,7 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "Aliquam"
       subtitle = "Ipsum Dolor Sit Amet"
-      image = "pic01.jpg"
+      image = "pic10.jpg"
       url = "blogs/aliquam"
 
     [[params.tiles.showcase]]
@@ -172,48 +172,34 @@ disqusShortname = ""
     # by copying the corresponding map with frontmatter code.
     [[params.contact.email]]
     title = "Email"
-    email = "example@domain.com"
+    email = "mclark.mfa2021@london.edu"
 
     [[params.contact.phone]]
     title = "Phone"
-    phone = "(000) 000-0000 x1234"
+    phone = "+447947154425"
 
     [[params.contact.address]]
     title = "Address"
-    street = "Street"
-    city = "City, ST 00000"
-    country = "Country"
+    street = "London Business School, Regents Park"
+    city = "London"
+    country = "England"
 
   # Footer section
   [params.footer]
     enable = true
-    copyright = "Company Name"
+    copyright = "Max Clark"
 
     # Uses font awesome icons
-    [[params.footer.social]]
-      icon = "fa-twitter"
-      url= "https://www.twitter.com"
-      label = "Twitter"
 
     [[params.footer.social]]
-      icon = "fa-facebook"
-      url= "https://www.facebook.com"
-      label = "Facebook"
-
-    [[params.footer.social]]
-      icon = "fa-instagram"
-      url= "https://www.instagram.com"
-      label = "Instagram"
-    
+      icon = "fa-linkedin"
+      url= "https://www.linkedin.com/in/max-clark-0b4501136/"
+      label = "LinkedIn"
+      
     [[params.footer.social]]
       icon = "fa-github"
       url= "https://www.github.com"
       label = "GitHub"
-
-    [[params.footer.social]]
-      icon = "fa-linkedin"
-      url= "https://www.linkedin.com"
-      label = "LinkedIn"
 
     [[params.footer.quicklinks]]
       text = "Design: "
