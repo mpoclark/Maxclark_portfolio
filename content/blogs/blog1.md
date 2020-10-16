@@ -7,7 +7,7 @@ description: ""
 draft: false
 image: "pic07.jpg"
 keywords: ""
-slug: CV
+slug: 
 title: CV
 ---
 
