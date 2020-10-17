@@ -3,12 +3,12 @@ categories:
 - ""
 - ""
 date: "2017-10-31T22:26:09-05:00"
-description: Past Projects
+description: 
 draft: false
 image: LBS.jpg
 keywords: ""
 slug: N/A
-title: Past Projects
+title: 
 ---
 
 ```{r, setup, echo=FALSE}
