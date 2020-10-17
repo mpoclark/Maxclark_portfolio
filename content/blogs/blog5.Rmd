@@ -7,7 +7,7 @@ description: Past Projects
 draft: false
 image: LBS.jpg
 keywords: ""
-slug: project
+slug: blog5
 title: Past Projects
 ---
 
@@ -262,7 +262,7 @@ You can load the data and examine its structure
 
 ```{r load-movies-data}
 library(readr)
-movies <- read_csv("C:/Users/viktor/Desktop/Sep 2020-Mid 2021/LBS/Data Analytics for Finance/session6-workshop3/data/movies.csv")
+movies <- read_csv("~/Desktop/data/movies.csv")
 View(movies)
 ```
 
@@ -331,7 +331,7 @@ You are asked to carry out the analysis. The objective is to find out whether th
 
 ```{r load_omega_data}
 library(readr)
-omega <- read_csv("C:/Users/viktor/Desktop/Sep 2020-Mid 2021/LBS/Data Analytics for Finance/session6-workshop3/data/omega.csv")
+omega <- read_csv("~/Desktop/data/omega.csv")
 View(omega)
 ```
 
