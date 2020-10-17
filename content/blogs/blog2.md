@@ -7,7 +7,7 @@ description: Past Projects
 draft: false
 image: LBS.jpg
 keywords: ""
-slug: blog5
+slug: N/A
 title: Past Projects
 ---
 
