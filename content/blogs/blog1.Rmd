@@ -9,7 +9,6 @@ image: CV.jpg
 keywords: ""
 slug: ipsum
 title: Ipsum
----
 
 
 ````{r, setup, echo=FALSE}
