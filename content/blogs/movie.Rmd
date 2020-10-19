@@ -5,7 +5,7 @@ categories:
 date: "2017-10-31T22:42:51-05:00"
 description: Movies analysis
 draft: false
-image: beer.jpg
+image: 
 keywords: ""
 slug: movie
 title: IMDB
@@ -17,7 +17,6 @@ output: html_document
 ## Analysis of movies- IMDB dataset
 
 ```{r,load_movies, warning=FALSE, message=FALSE}
-
 movies <- read_csv(here::here("data", "movies.csv"))
 glimpse(movies)
 
