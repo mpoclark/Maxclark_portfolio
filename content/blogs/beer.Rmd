@@ -10,6 +10,7 @@ keywords: ""
 slug: beer
 title: Beer Project
 site: blogdown::blogdown_site
+output: html_document
 ---
 
 

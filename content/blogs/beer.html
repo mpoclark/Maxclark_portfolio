@@ -54,7 +54,7 @@ top25_beer &lt;- beer %&gt;%
 ggplot(top25_beer, aes(x= beer_servings,
        y = reorder(country, beer_servings))) +
   geom_bar(stat=&#39;identity&#39;)+ labs(x=&quot;Beer Servings Consumed Per Person&quot;,y = &quot;Country&quot;, title = &quot;Top 25 Beer Consuming Countries&quot;)</code></pre>
-<p><img src="/blogs/project_files/figure-html/beer_plot-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/blogs/beer_files/figure-html/beer_plot-1.png" width="648" style="display: block; margin: auto;" /></p>
 <p>Make a plot that shows the top 25 wine consuming countries</p>
 <pre class="r"><code>wine &lt;- drinks %&gt;% 
   select(country, wine_servings) %&gt;% 
@@ -66,7 +66,7 @@ top25_wine &lt;- wine %&gt;%
 ggplot(top25_wine, aes(x= wine_servings,
        y = reorder(country, wine_servings))) +
   geom_bar(stat=&#39;identity&#39;)+ labs(x=&quot;Wine Servings Consumed Per Person&quot;,y = &quot;Country&quot;, title = &quot;Top 25 Wine Consuming Countries&quot;)</code></pre>
-<p><img src="/blogs/project_files/figure-html/wine_plot-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/blogs/beer_files/figure-html/wine_plot-1.png" width="648" style="display: block; margin: auto;" /></p>
 <p>Finally, make a plot that shows the top 25 spirit consuming countries</p>
 <pre class="r"><code># YOUR CODE GOES HERE
 
@@ -80,7 +80,7 @@ top25_spirit &lt;- spirit %&gt;%
 ggplot(top25_spirit, aes(x= spirit_servings,
        y = reorder(country, spirit_servings))) +
   geom_bar(stat=&#39;identity&#39;)+ labs(x=&quot;Spirits Servings Consumed Per Person&quot;,y = &quot;Country&quot;, title = &quot;Top 25 Spirits Consuming Countries&quot;)</code></pre>
-<p><img src="/blogs/project_files/figure-html/spirit_plot-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/blogs/beer_files/figure-html/spirit_plot-1.png" width="648" style="display: block; margin: auto;" /></p>
 <p>What can you infer from these plots? Don’t just explain what’s in the graph, but speculate or tell a short story (1-2 paragraphs max).</p>
 <blockquote>
 <p>TYPE YOUR ANSWER AFTER (AND OUTSIDE!) THIS BLOCKQUOTE.</p>
