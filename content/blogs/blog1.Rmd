@@ -9,6 +9,7 @@ image: CV.jpg
 keywords: ""
 slug: ipsum
 title: Ipsum
+site: blogdown::blogdown_site
 ---
 
 ````{r, setup, echo=FALSE}
