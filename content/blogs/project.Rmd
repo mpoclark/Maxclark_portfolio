@@ -8,6 +8,7 @@ draft: false
 image: LBS.jpg
 keywords: ""
 title: Past Projects
+slug: project
 output: html_document
 ---
 
