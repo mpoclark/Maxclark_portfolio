@@ -6,7 +6,7 @@ date: "2017-10-31T22:26:13-05:00"
 description: []
 image: pic10.jpg
 keywords: ""
-slug: ipsum
+slug: tempus
 title: IMDB Ratings
 ---
 
