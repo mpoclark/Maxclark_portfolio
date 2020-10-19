@@ -8,7 +8,7 @@ image: pic10.jpg
 keywords: ""
 slug: tempus
 title: IMDB Ratings
----
+
 
 ````{r, setup, echo=FALSE}
 knitr::opts_chunk$set(
@@ -117,5 +117,4 @@ movies_plot <- table %>%
 
 movies_plot + theme(legend.position="none")
 ```
-
 ---
