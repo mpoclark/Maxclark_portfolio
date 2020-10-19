@@ -1,0 +1,166 @@
+---
+categories:
+- ""
+- ""
+date: "2017-10-31T22:42:51-05:00"
+description: Returns on financial stocks
+draft: false
+image: 
+keywords: ""
+slug: stock
+title: Returns on financial stocks
+site: blogdown::blogdown_site
+output: html_document
+---
+
+```{r, setup}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(fivethirtyeight)
+library(here)
+library(skimr)
+library(janitor)
+library(vroom)
+library(tidyquant)
+library(kableExtra)
+library(ggrepel)
+library(yaml)
+```
+
+# Returns of financial stocks
+
+```{r load_nyse_data, message=FALSE, warning=FALSE}
+nyse <- read_csv(here::here("data","nyse.csv"))
+```
+
+Based on this dataset, create a table and a bar plot that shows the number of companies per sector, in descending order
+
+```{r companies_per_sector}
+
+comps_by_sector <- nyse %>% 
+  group_by(sector) %>% 
+  count(sort = TRUE) 
+
+table_companies_by_sector <- comps_by_sector %>%
+  kable(caption = "Number of Companies by Sector") %>%
+  kable_classic("striped", full_width = FALSE) %>%
+  column_spec(2, width = "7em")
+table_companies_by_sector
+
+ggplot(comps_by_sector, aes(x = reorder(sector, -n), y = n))+
+  geom_col()+
+  theme(axis.text.x=element_text(angle=90))+
+  labs(title = "Number of Companies by Sector",
+       x = "Sector", 
+       y = "Number of companies")
+
+```
+Next, let's choose some stocks and their ticker symbols and download some data. You **MUST** choose 6 different stocks from the ones listed below; You should, however, add `SPY` which is the SP500 ETF (Exchange Traded Fund).
+
+
+```{r get_price_data, message=FALSE, warning=FALSE, cache=TRUE}
+
+myStocks <- c("MMM","ABB","ABT","ABBV","ACN","AAP","SPY" ) %>%
+  tq_get(get  = "stock.prices",
+         from = "2011-01-01",
+         to   = "2020-08-31") %>%
+  group_by(symbol) 
+
+glimpse(myStocks) 
+```
+
+Financial performance analysis depend on returns; If I buy a stock today for 100 and I sell it tomorrow for 101.75, my one-day return, assuming no transaction costs, is 1.75%. So given the adjusted closing prices, our first step is to calculate daily and monthly returns.
+
+```{r calculate_returns, message=FALSE, warning=FALSE, cache=TRUE}
+#calculate daily returns
+myStocks_returns_daily <- myStocks %>%
+  tq_transmute(select     = adjusted, 
+               mutate_fun = periodReturn, 
+               period     = "daily", 
+               type       = "log",
+               col_rename = "daily_returns",
+               cols = c(nested.col))  
+
+#calculate monthly  returns
+myStocks_returns_monthly <- myStocks %>%
+  tq_transmute(select     = adjusted, 
+               mutate_fun = periodReturn, 
+               period     = "monthly", 
+               type       = "arithmetic",
+               col_rename = "monthly_returns",
+               cols = c(nested.col)) 
+
+#calculate yearly returns
+myStocks_returns_annual <- myStocks %>%
+  group_by(symbol) %>%
+  tq_transmute(select     = adjusted, 
+               mutate_fun = periodReturn, 
+               period     = "yearly", 
+               type       = "arithmetic",
+               col_rename = "yearly_returns",
+               cols = c(nested.col))
+```
+
+Create a table where you summarise monthly returns for each of the stocks and `SPY`; min, max, median, mean, SD.
+
+```{r summarise_monthly_returns}
+
+summary_monthly_returns <- myStocks_returns_monthly %>% 
+  
+  group_by(symbol) %>% 
+  
+  summarise(min=min(monthly_returns)*100, max=max(monthly_returns)*100,median=median(monthly_returns)*100,mean=mean(monthly_returns)*100,SD=sd(monthly_returns)*100) %>% 
+  
+  arrange(desc(mean))
+
+kbl(summary_monthly_returns,col.names=c("Ticker","Min. Monthly Returns (%)","Max. Monthly Returns (%)","Median Monthly Returns (%)","Mean Monthly Returns (%)","Standard Deviation Monthly Returns (%)")) %>%
+kable_styling()
+
+```
+
+Plot a density plot, using `geom_density()`, for each of the stocks
+```{r density_monthly_returns}
+
+ggplot(myStocks_returns_monthly, aes(x=monthly_returns)) + 
+  geom_density() + 
+  facet_wrap(~symbol) + 
+  labs(x="Returns (monthly)", y="Density", title="Density Plot of Returns (monthly)")
+
+```
+
+What can you infer from this plot? Which stock is the riskiest? The least risky? 
+
+From our point of view, the stock "ABT" seems to have the least variance, ie least riskiest, while ABBV has the most. However, not a stock but obviously SPY seems to be least riskiest.
+
+Finally, make a plot that shows the expected monthly return (mean) of a stock on the Y axis and the risk (standard deviation) in the X-axis. Please use `ggrepel::geom_text_repel()` to label each stock
+
+```{r risk_return_plot}
+
+ggplot(summary_monthly_returns, aes(x=SD, y=mean, label=symbol)) + 
+  geom_point(alpha=5) + 
+  geom_text_repel() + 
+  labs(x="SD", y="Mean", title="Correlation Between Mean and Standard Deviation of  Returns (monthly)") 
+
+```
+
+What can you infer from this plot? Are there any stocks which, while being riskier, do not have a higher expected return?
+
+In general, this graph seems to representate the efficient frontier illustration. Assuming similar risk level (SD), any stock is more efficient with higher return. Alternatively, assuming similar return level, any stock with lower risk (SD) is more efficient. E.g. ABB is efficient over MMM.

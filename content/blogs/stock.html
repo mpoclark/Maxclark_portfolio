@@ -1,0 +1,406 @@
+---
+categories:
+- ""
+- ""
+date: "2017-10-31T22:42:51-05:00"
+description: Returns on financial stocks
+draft: false
+image: 
+keywords: ""
+slug: stock
+title: Returns on financial stocks
+site: blogdown::blogdown_site
+output: html_document
+---
+
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+
+
+<pre class="r"><code>knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size=&quot;small&quot;)   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = &quot;center&quot;
+)</code></pre>
+<div id="returns-of-financial-stocks" class="section level1">
+<h1>Returns of financial stocks</h1>
+<pre class="r"><code>nyse &lt;- read_csv(here::here(&quot;data&quot;,&quot;nyse.csv&quot;))</code></pre>
+<p>Based on this dataset, create a table and a bar plot that shows the number of companies per sector, in descending order</p>
+<pre class="r"><code>comps_by_sector &lt;- nyse %&gt;% 
+  group_by(sector) %&gt;% 
+  count(sort = TRUE) 
+
+table_companies_by_sector &lt;- comps_by_sector %&gt;%
+  kable(caption = &quot;Number of Companies by Sector&quot;) %&gt;%
+  kable_classic(&quot;striped&quot;, full_width = FALSE) %&gt;%
+  column_spec(2, width = &quot;7em&quot;)
+table_companies_by_sector</code></pre>
+<table class=" lightable-classic lightable-striped" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
+<caption>
+(#tab:companies_per_sector)Number of Companies by Sector
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+sector
+</th>
+<th style="text-align:right;">
+n
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Finance
+</td>
+<td style="text-align:right;width: 7em; ">
+97
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Consumer Services
+</td>
+<td style="text-align:right;width: 7em; ">
+79
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Public Utilities
+</td>
+<td style="text-align:right;width: 7em; ">
+60
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Capital Goods
+</td>
+<td style="text-align:right;width: 7em; ">
+45
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Health Care
+</td>
+<td style="text-align:right;width: 7em; ">
+45
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Energy
+</td>
+<td style="text-align:right;width: 7em; ">
+42
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Technology
+</td>
+<td style="text-align:right;width: 7em; ">
+40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Basic Industries
+</td>
+<td style="text-align:right;width: 7em; ">
+39
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Consumer Non-Durables
+</td>
+<td style="text-align:right;width: 7em; ">
+31
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Miscellaneous
+</td>
+<td style="text-align:right;width: 7em; ">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Transportation
+</td>
+<td style="text-align:right;width: 7em; ">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Consumer Durables
+</td>
+<td style="text-align:right;width: 7em; ">
+8
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>ggplot(comps_by_sector, aes(x = reorder(sector, -n), y = n))+
+  geom_col()+
+  theme(axis.text.x=element_text(angle=90))+
+  labs(title = &quot;Number of Companies by Sector&quot;,
+       x = &quot;Sector&quot;, 
+       y = &quot;Number of companies&quot;)</code></pre>
+<p><img src="/blogs/stock_files/figure-html/companies_per_sector-1.png" width="648" style="display: block; margin: auto;" />
+Next, let’s choose some stocks and their ticker symbols and download some data. You <strong>MUST</strong> choose 6 different stocks from the ones listed below; You should, however, add <code>SPY</code> which is the SP500 ETF (Exchange Traded Fund).</p>
+<pre class="r"><code>myStocks &lt;- c(&quot;MMM&quot;,&quot;ABB&quot;,&quot;ABT&quot;,&quot;ABBV&quot;,&quot;ACN&quot;,&quot;AAP&quot;,&quot;SPY&quot; ) %&gt;%
+  tq_get(get  = &quot;stock.prices&quot;,
+         from = &quot;2011-01-01&quot;,
+         to   = &quot;2020-08-31&quot;) %&gt;%
+  group_by(symbol) 
+
+glimpse(myStocks) </code></pre>
+<pre><code>## Rows: 16,515
+## Columns: 8
+## Groups: symbol [7]
+## $ symbol   &lt;chr&gt; &quot;MMM&quot;, &quot;MMM&quot;, &quot;MMM&quot;, &quot;MMM&quot;, &quot;MMM&quot;, &quot;MMM&quot;, &quot;MMM&quot;, &quot;MMM&quot;, &quot;MMM…
+## $ date     &lt;date&gt; 2011-01-03, 2011-01-04, 2011-01-05, 2011-01-06, 2011-01-07,…
+## $ open     &lt;dbl&gt; 86.8, 87.0, 86.3, 86.9, 86.6, 85.7, 87.3, 88.0, 88.5, 87.7, …
+## $ high     &lt;dbl&gt; 87.3, 87.3, 87.9, 87.2, 87.3, 87.3, 88.3, 88.8, 88.9, 88.1, …
+## $ low      &lt;dbl&gt; 86.7, 86.3, 86.1, 85.6, 85.9, 85.7, 87.3, 87.9, 87.8, 87.4, …
+## $ close    &lt;dbl&gt; 86.8, 86.7, 86.7, 86.1, 86.2, 87.2, 87.7, 88.7, 88.0, 88.1, …
+## $ volume   &lt;dbl&gt; 2632800, 2644100, 4081300, 3452600, 3355500, 3475200, 302440…
+## $ adjusted &lt;dbl&gt; 66.8, 66.7, 66.7, 66.3, 66.4, 67.1, 67.6, 68.3, 67.8, 67.8, …</code></pre>
+<p>Financial performance analysis depend on returns; If I buy a stock today for 100 and I sell it tomorrow for 101.75, my one-day return, assuming no transaction costs, is 1.75%. So given the adjusted closing prices, our first step is to calculate daily and monthly returns.</p>
+<pre class="r"><code>#calculate daily returns
+myStocks_returns_daily &lt;- myStocks %&gt;%
+  tq_transmute(select     = adjusted, 
+               mutate_fun = periodReturn, 
+               period     = &quot;daily&quot;, 
+               type       = &quot;log&quot;,
+               col_rename = &quot;daily_returns&quot;,
+               cols = c(nested.col))  
+
+#calculate monthly  returns
+myStocks_returns_monthly &lt;- myStocks %&gt;%
+  tq_transmute(select     = adjusted, 
+               mutate_fun = periodReturn, 
+               period     = &quot;monthly&quot;, 
+               type       = &quot;arithmetic&quot;,
+               col_rename = &quot;monthly_returns&quot;,
+               cols = c(nested.col)) 
+
+#calculate yearly returns
+myStocks_returns_annual &lt;- myStocks %&gt;%
+  group_by(symbol) %&gt;%
+  tq_transmute(select     = adjusted, 
+               mutate_fun = periodReturn, 
+               period     = &quot;yearly&quot;, 
+               type       = &quot;arithmetic&quot;,
+               col_rename = &quot;yearly_returns&quot;,
+               cols = c(nested.col))</code></pre>
+<p>Create a table where you summarise monthly returns for each of the stocks and <code>SPY</code>; min, max, median, mean, SD.</p>
+<pre class="r"><code>summary_monthly_returns &lt;- myStocks_returns_monthly %&gt;% 
+  
+  group_by(symbol) %&gt;% 
+  
+  summarise(min=min(monthly_returns)*100, max=max(monthly_returns)*100,median=median(monthly_returns)*100,mean=mean(monthly_returns)*100,SD=sd(monthly_returns)*100) %&gt;% 
+  
+  arrange(desc(mean))
+
+kbl(summary_monthly_returns,col.names=c(&quot;Ticker&quot;,&quot;Min. Monthly Returns (%)&quot;,&quot;Max. Monthly Returns (%)&quot;,&quot;Median Monthly Returns (%)&quot;,&quot;Mean Monthly Returns (%)&quot;,&quot;Standard Deviation Monthly Returns (%)&quot;)) %&gt;%
+kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Ticker
+</th>
+<th style="text-align:right;">
+Min. Monthly Returns (%)
+</th>
+<th style="text-align:right;">
+Max. Monthly Returns (%)
+</th>
+<th style="text-align:right;">
+Median Monthly Returns (%)
+</th>
+<th style="text-align:right;">
+Mean Monthly Returns (%)
+</th>
+<th style="text-align:right;">
+Standard Deviation Monthly Returns (%)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+ACN
+</td>
+<td style="text-align:right;">
+-14.3
+</td>
+<td style="text-align:right;">
+15.8
+</td>
+<td style="text-align:right;">
+2.160
+</td>
+<td style="text-align:right;">
+1.731
+</td>
+<td style="text-align:right;">
+5.57
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ABBV
+</td>
+<td style="text-align:right;">
+-18.3
+</td>
+<td style="text-align:right;">
+21.1
+</td>
+<td style="text-align:right;">
+1.789
+</td>
+<td style="text-align:right;">
+1.711
+</td>
+<td style="text-align:right;">
+7.48
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ABT
+</td>
+<td style="text-align:right;">
+-15.2
+</td>
+<td style="text-align:right;">
+17.2
+</td>
+<td style="text-align:right;">
+1.508
+</td>
+<td style="text-align:right;">
+1.700
+</td>
+<td style="text-align:right;">
+5.30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AAP
+</td>
+<td style="text-align:right;">
+-29.6
+</td>
+<td style="text-align:right;">
+29.6
+</td>
+<td style="text-align:right;">
+0.978
+</td>
+<td style="text-align:right;">
+1.160
+</td>
+<td style="text-align:right;">
+8.89
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SPY
+</td>
+<td style="text-align:right;">
+-12.5
+</td>
+<td style="text-align:right;">
+12.7
+</td>
+<td style="text-align:right;">
+1.462
+</td>
+<td style="text-align:right;">
+1.117
+</td>
+<td style="text-align:right;">
+3.81
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MMM
+</td>
+<td style="text-align:right;">
+-15.0
+</td>
+<td style="text-align:right;">
+11.3
+</td>
+<td style="text-align:right;">
+1.683
+</td>
+<td style="text-align:right;">
+0.928
+</td>
+<td style="text-align:right;">
+5.33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ABB
+</td>
+<td style="text-align:right;">
+-19.7
+</td>
+<td style="text-align:right;">
+14.8
+</td>
+<td style="text-align:right;">
+0.794
+</td>
+<td style="text-align:right;">
+0.636
+</td>
+<td style="text-align:right;">
+6.57
+</td>
+</tr>
+</tbody>
+</table>
+<p>Plot a density plot, using <code>geom_density()</code>, for each of the stocks</p>
+<pre class="r"><code>ggplot(myStocks_returns_monthly, aes(x=monthly_returns)) + 
+  geom_density() + 
+  facet_wrap(~symbol) + 
+  labs(x=&quot;Returns (monthly)&quot;, y=&quot;Density&quot;, title=&quot;Density Plot of Returns (monthly)&quot;)</code></pre>
+<p><img src="/blogs/stock_files/figure-html/density_monthly_returns-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>What can you infer from this plot? Which stock is the riskiest? The least risky?</p>
+<p>From our point of view, the stock “ABT” seems to have the least variance, ie least riskiest, while ABBV has the most. However, not a stock but obviously SPY seems to be least riskiest.</p>
+<p>Finally, make a plot that shows the expected monthly return (mean) of a stock on the Y axis and the risk (standard deviation) in the X-axis. Please use <code>ggrepel::geom_text_repel()</code> to label each stock</p>
+<pre class="r"><code>ggplot(summary_monthly_returns, aes(x=SD, y=mean, label=symbol)) + 
+  geom_point(alpha=5) + 
+  geom_text_repel() + 
+  labs(x=&quot;SD&quot;, y=&quot;Mean&quot;, title=&quot;Correlation Between Mean and Standard Deviation of  Returns (monthly)&quot;) </code></pre>
+<p><img src="/blogs/stock_files/figure-html/risk_return_plot-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>What can you infer from this plot? Are there any stocks which, while being riskier, do not have a higher expected return?</p>
+<p>In general, this graph seems to representate the efficient frontier illustration. Assuming similar risk level (SD), any stock is more efficient with higher return. Alternatively, assuming similar return level, any stock with lower risk (SD) is more efficient. E.g. ABB is efficient over MMM.</p>
+</div>
