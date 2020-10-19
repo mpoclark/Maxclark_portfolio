@@ -1,5 +1,9 @@
 ---
 site: blogdown:::blogdown_site
+title: "IMDB"
+author: "Max Clark"
+date: "19/10/2020"
+output: html_document
 ---
 
 ````{r, setup, echo=FALSE}
