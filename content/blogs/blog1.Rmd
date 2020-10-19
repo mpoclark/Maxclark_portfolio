@@ -118,3 +118,6 @@ movies_plot <- table %>%
 
 movies_plot + theme(legend.position="none")
 ```
+
+
+---
