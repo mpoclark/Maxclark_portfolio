@@ -9,3 +9,110 @@ keywords: ""
 slug: tempus
 title: Tempus
 ---
+````{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+
+```{r load-libraries, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(GGally)
+library(readxl)
+library(here)
+library(skimr)
+library(janitor)
+library(broom)
+library(formattable)
+library(tidyquant)
+library(infer)
+library(openintro)
+library(tidyquant)
+```
+
+# IMDB ratings: Differences between directors
+
+Recall the IMBD ratings data. I would like you to explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not. I have already calculated the confidence intervals for the mean ratings of these two directors and as you can see they overlap. 
+
+
+```{r directors, echo=FALSE, out.width="100%"}
+knitr::include_graphics(here::here("images", "directors.png"), error = FALSE)
+```
+
+First, I would like you to reproduce this graph. You may find `geom_errorbar()` and `geom_rect()` useful.
+
+In addition, you will run a hpothesis test. You should use both the `t.test` command and the `infer` package to simulate from a null distribution, where you assume zero difference between the two.
+
+> Before anything, write down the null and alternative hypotheses, as well as the resulting test statistic and the associated t-stat or p-value. At the end of the day, what do you conclude?
+
+You can load the data and examine its structure
+
+```{r load-movies-data}
+library(readr)
+movies <- read_csv("~/Desktop/data/movies.csv")
+View(movies)
+```
+
+Your R code and analysis should go here. If you want to insert a blank chunk of R code you can just hit `Ctrl/Cmd+Alt+I` 
+
+```{r}
+
+table <- movies %>% 
+  
+#Filtering data for mussing values & choosing the two previously named directors
+  filter(!is.na(rating), director == 'Steven Spielberg' | director == 'Tim Burton') %>%
+  group_by(director) %>% 
+  
+#Required statistic calculation
+  summarise(mean_1= mean(rating), mean = round(mean_1, digits = 2), sd= sd(rating), t_critical=qt(.95, n() - 1), standard_error=sd(movies$rating)/sqrt(n()), lower_95_1 = mean - t_critical*(standard_error), upper_95_1 = mean + t_critical*(standard_error), lower_95= round(lower_95_1, digits = 2),upper_95= round(upper_95_1, digits = 2) )
+
+table
+
+
+CI_lower <- table %>% 
+  filter(director == 'Steven Spielberg') %>% 
+  select(lower_95)
+
+CI_higher <- table %>% 
+  filter(director == 'Tim Burton') %>% 
+  select(upper_95)
+
+#plotting
+movies_plot <- table %>% 
+
+#plotting relevant variables
+  ggplot(aes(x = mean, y = reorder(director, mean), color = director, xmin = lower_95, xmax = upper_95)) +
+  geom_errorbar(aes(xmin=lower_95, xmax=upper_95, color=director), width=0.1, size=1.5, scales = "free") +
+  geom_point(aes(x = mean, y = director, color = director, size = 1.7))+
+
+#Let's shade the common CI of the two directors.
+  geom_rect(aes(xmin = CI_lower$lower_95, xmax = CI_higher$upper_95, ymin= -Inf, ymax=Inf), alpha=0.2, colour = "transparent")+
+  
+#Graph presentation
+  geom_text(aes(label=mean), color= "grey", size=7, vjust=-0.7)+
+  geom_text(aes(label=upper_95), color= "grey", size=4, vjust=-2, hjust=-7)+
+  geom_text(aes(label=lower_95), color= "grey", size=4, vjust=-2, hjust=7)+
+  theme_minimal()+
+  labs(title= "Burton & Spielberg, do they have the same mean IMDB rating?",
+               subtitle = "Overlap display of 95% CI",
+               x="IMDB Mean Rating",
+               y="")+
+  theme(plot.title = element_text(family = "Arial", face = "bold", size = (11)),
+          axis.title = element_text(family = "Arial", size = (9)),
+          axis.text = element_text(family = "Arial", size = (9)))
+
+movies_plot + theme(legend.position="none")
+```
