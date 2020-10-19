@@ -1,4 +1,3 @@
-
 ---
 categories:
 - ""
@@ -8,7 +7,7 @@ description: ""
 draft: false
 image: "pic07.jpg"
 keywords: ""
-slug: CV
+slug: untitled
 title: CV
 ---
 ````{r, setup, echo=FALSE}
