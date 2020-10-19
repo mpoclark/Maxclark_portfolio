@@ -9,7 +9,8 @@ image: CV.jpg
 keywords: ""
 slug: ipsum
 title: Ipsum
-site: blogdown::blogdown_site
+site: blogdown::blogdownserver_site
+output: html_document
 ---
 
 ````{r, setup, echo=FALSE}
