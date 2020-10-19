@@ -110,10 +110,10 @@ disqusShortname = ""
       url = "blogs/stock"
 
      [[params.tiles.showcase]]
-       title = "IMDB Ratings"
-       subtitle = "Previous Project"
-       image = "pic05.jpg"
-        url = "blogs/IMDBratings"
+       title = "Airbnb in Rio"
+       subtitle = "Final Project"
+       image = "rio.jpg"
+        url = "blogs/final"
 
    #   [[params.tiles.showcase]]
     #    title = "Etiam"
