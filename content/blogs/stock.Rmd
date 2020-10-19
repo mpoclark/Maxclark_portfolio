@@ -5,7 +5,7 @@ categories:
 date: "2017-10-31T22:42:51-05:00"
 description: Returns on financial stocks
 draft: false
-image: 
+image: stock.jpg
 keywords: ""
 slug: stock
 title: Returns on financial stocks

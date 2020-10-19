@@ -106,7 +106,7 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "Stock Analysis"
       subtitle = "Financial Returns"
-      image = "pic10.jpg"
+      image = "stock.jpg"
       url = "blogs/stock"
 
      [[params.tiles.showcase]]
