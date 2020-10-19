@@ -101,7 +101,7 @@ disqusShortname = ""
       title = "Past Projects"
       subtitle = "Examples of my coding in R"
       image = "LBS.jpg"
-      url = "blogs/blog2.Rmd"
+      url = "blogs/project"
 
     [[params.tiles.showcase]]
       title = "Ipsum"
