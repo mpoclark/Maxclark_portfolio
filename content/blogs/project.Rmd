@@ -1,0 +1,119 @@
+---
+categories:
+- ""
+- ""
+date: "2017-10-31T22:42:51-05:00"
+description: Beer Project
+draft: false
+image: beer.jpg
+keywords: ""
+slug: beer
+title: Beer Project
+site: blogdown::blogdown_site
+output: html_document
+---
+
+
+```{r, setup}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(fivethirtyeight)
+library(here)
+library(skimr)
+library(janitor)
+library(vroom)
+library(tidyquant)
+library(kableExtra)
+library(ggrepel)
+library(yaml)
+```
+# Drinks
+## Where Do People Drink The Most Beer, Wine And Spirits?
+
+```{r, load_alcohol_data}
+library(fivethirtyeight)
+data(drinks)
+
+```
+
+What are the variable types? Any missing values we should worry about? 
+
+```{r glimpse_skim_data}
+glimpse(drinks)
+
+```
+
+Make a plot that shows the top 25 beer consuming countries
+
+```{r beer_plot}
+
+beer <- drinks %>% 
+  select(country, beer_servings) %>% 
+  arrange(desc(beer_servings))
+
+top25_beer <- beer %>% 
+  head(25)
+
+ggplot(top25_beer, aes(x= beer_servings,
+       y = reorder(country, beer_servings))) +
+  geom_bar(stat='identity')+ labs(x="Beer Servings Consumed Per Person",y = "Country", title = "Top 25 Beer Consuming Countries")
+
+```
+
+Make a plot that shows the top 25 wine consuming countries
+
+```{r wine_plot}
+
+wine <- drinks %>% 
+  select(country, wine_servings) %>% 
+  arrange(desc(wine_servings))
+
+top25_wine <- wine %>% 
+  head(25)
+
+ggplot(top25_wine, aes(x= wine_servings,
+       y = reorder(country, wine_servings))) +
+  geom_bar(stat='identity')+ labs(x="Wine Servings Consumed Per Person",y = "Country", title = "Top 25 Wine Consuming Countries")
+
+```
+
+Finally, make a plot that shows the top 25 spirit consuming countries
+```{r spirit_plot}
+# YOUR CODE GOES HERE
+
+spirit <- drinks %>% 
+  select(country, spirit_servings) %>% 
+  arrange(desc(spirit_servings))
+
+top25_spirit <- spirit %>% 
+  head(25)
+
+ggplot(top25_spirit, aes(x= spirit_servings,
+       y = reorder(country, spirit_servings))) +
+  geom_bar(stat='identity')+ labs(x="Spirits Servings Consumed Per Person",y = "Country", title = "Top 25 Spirits Consuming Countries")
+
+```
+
+What can you infer from these plots? Don't just explain what's in the graph, but speculate or tell a short story (1-2 paragraphs max).
+
+> TYPE YOUR ANSWER AFTER (AND OUTSIDE!) THIS BLOCKQUOTE.
+
+For beer and wine, the biggest consumer countries match the producing countries. However, for spirits the biggest consumer countries tend to be countries that tend to be more visited by consumers (except Russia and Belarus).
