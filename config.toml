@@ -51,9 +51,9 @@ disqusShortname = ""
       name = "Blogs"
       url = "blogs"
 
-     #[[params.navigation.links]]
-      # name = "Generic Blog"
-       #url = "blogs/ipsum"
+     [[params.navigation.links]]
+       name = "Other"
+       url = "blogs/other"
 
      #[[params.navigation.links]]
        #name = "Elements"
@@ -101,19 +101,19 @@ disqusShortname = ""
       title = "Past Projects"
       subtitle = "Examples of my coding in R"
       image = "pic10.jpg"
-      url = "blogs/magna/"
+      url = "blogs/magna"
 
     [[params.tiles.showcase]]
       title = "Ipsum"
       subtitle = "Nisl Sed Aliquam"
       image = "pic10.jpg"
-      url = "blogs/ipsum/"
+      url = "blogs/ipsum"
 
      [[params.tiles.showcase]]
        title = "IMDB Ratings"
        subtitle = "Ipsum Dolor Sit Amet"
        image = "pic05.jpg"
-        url = "blogs/tempus/"
+        url = "blogs/tempus"
 
    #   [[params.tiles.showcase]]
     #    title = "Etiam"
