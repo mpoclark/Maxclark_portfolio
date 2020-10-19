@@ -99,7 +99,7 @@ disqusShortname = ""
 
     [[params.tiles.showcase]]
       title = "Past Projects"
-      subtitle = "Examples of my coding in R"
+      subtitle = "Who drinks the most beer?!"
       image = "LBS.jpg"
       url = "blogs/beer"
 
