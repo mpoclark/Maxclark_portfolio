@@ -6,9 +6,8 @@ date: "2017-10-31T22:26:13-05:00"
 description: IMDB
 image: pic10.jpg
 keywords: ""
-slug: IMDB
+slug: Tempus
 title: Tempus
-output: html_document
 
 ````{r, setup, echo=FALSE}
 knitr::opts_chunk$set(
