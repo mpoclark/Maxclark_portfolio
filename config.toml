@@ -32,7 +32,7 @@ disqusShortname = ""
 
   # 404 error customization
   [params.error404]
-    heading = "Page couldn't be found"
+    heading = "Apologies, something went wrong!"
     text = "Please visit [this page](/)"
 
   # Navigation Section

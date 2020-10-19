@@ -1,14 +1,9 @@
 ---
-categories:
-- ""
-- ""
-date: "2017-10-31T22:26:13-05:00"
-description: IMDB
-image: pic10.jpg
-keywords: ""
-slug: IMDB
-title: Tempus
-output: html_document
+date: "2017-10-31T22:27:21-05:00"
+draft: false
+image: pic02.jpg
+title: Portfolio Max Clark
+---
 
 ````{r, setup, echo=FALSE}
 knitr::opts_chunk$set(
