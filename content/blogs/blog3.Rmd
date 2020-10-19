@@ -7,7 +7,7 @@ description: []
 image: pic10.jpg
 keywords: ""
 slug: tempus
-title: Tempus
+title: IMDB Ratings
 ---
 
 ````{r, setup, echo=FALSE}
