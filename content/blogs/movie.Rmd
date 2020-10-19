@@ -1,0 +1,164 @@
+---
+categories:
+- ""
+- ""
+date: "2017-10-31T22:42:51-05:00"
+description: Movies analysis
+draft: false
+image: beer.jpg
+keywords: ""
+slug: movie
+title: IMDB
+site: blogdown::blogdown_site
+output: html_document
+---
+
+# IMDB
+## Analysis of movies- IMDB dataset
+
+```{r,load_movies, warning=FALSE, message=FALSE}
+
+movies <- read_csv(here::here("data", "movies.csv"))
+glimpse(movies)
+
+```
+
+Besides the obvious variables of `title`, `genre`, `director`, `year`, and `duration`, the rest of the variables are as follows:
+
+- `gross` : The gross earnings in the US box office, not adjusted for inflation
+- `budget`: The movie's budget 
+- `cast_facebook_likes`: the number of facebook likes cast memebrs received
+- `votes`: the number of people who voted for (or rated) the movie in IMDB 
+- `reviews`: the number of reviews for that movie
+- `rating`: IMDB average rating 
+
+Use your data import, inspection, and cleaning skills to answer the following:
+
+```{r skim_moves}
+skim(movies)
+
+```
+
+- Are there any missing values (NAs)? Are all entries distinct or are there duplicate entries?
+
+Answer: There are no missing values. There are duplicate values, total of 2,907 unique movies.
+
+- Produce a table with the count of movies by genre, ranked in descending order
+
+```{r table_genre}
+movies %>% 
+  group_by(genre) %>% 
+    summarise(count = n()) %>% 
+    arrange(desc(count)) %>% 
+    kable(caption = "Movies by genre") %>% 
+  kable_classic("striped", full_width = FALSE)
+```
+
+
+- Produce a table with the average gross earning and budget (`gross` and `budget`) by genre. Calculate a variable `return_on_budget` which shows how many $ did a movie make at the box office for each $ of its budget. Ranked genres by this `return_on_budget` in descending order
+
+```{r return_on_budget}
+movies %>% 
+  group_by(genre) %>% 
+  summarise(avg_gross=mean(gross),
+            avg_budget=mean(budget),
+            return_on_budget=(avg_gross/avg_budget)) %>% 
+  arrange(desc(return_on_budget)) %>% 
+  kable(caption = "Return on Budget grouped by Genre") %>% 
+  kable_classic("striped", full_width = FALSE)
+
+```
+
+- Produce a table that shows the top 15 directors who have created the highest gross revenue in the box office. Don't just show the total gross amount, but also the mean, median, and standard deviation per director.
+
+```{r top_15_director}
+
+top15_director <- movies %>% 
+  group_by(director) %>% 
+  arrange(desc(gross)) %>% 
+  summarise(total_gross_amount = sum(gross),
+            mean_total_gross = mean(gross),
+            median_total_gross = median(gross),
+            SD_total_gross = STDEV(gross))%>%
+  arrange(desc(total_gross_amount))%>% 
+  head(15)
+
+top15_director %>% 
+  kable(caption = "Top 15 Directors by gross revenue") %>% 
+  kable_classic("striped", full_width = FALSE)
+
+
+```
+
+- Finally, ratings. Produce a table that describes how ratings are distributed by genre. We don't want just the mean, but also, min, max, median, SD and some kind of a histogram or density graph that visually shows how ratings are distributed. 
+
+```{r ratings}
+ratings <- movies %>% 
+  group_by(genre) %>% 
+  summarise(min_rating = min(rating),
+            max_rating = max(rating),
+            median_rating = median(rating),
+            SD_rating = STDEV(rating))
+ratings %>% 
+  kable(caption = "Ratings by genre") %>% 
+  kable_classic("striped", full_width = FALSE)
+
+ggplot(movies, aes(x = rating, fill = genre))+
+  geom_histogram(binwidth = 1)+
+  scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+                       limits = c(1, 10))
+
+
+```
+
+  - Examine the relationship between `gross` and `cast_facebook_likes`. Produce a scatterplot and write one sentence discussing whether the number of facebook likes that the cast has received is likely to be a good predictor of how much money a movie will make at the box office. What variable are you going to map to the Y- and X- axes?
+  
+  
+```{r, gross_on_fblikes}
+
+ggplot(movies, aes(x = gross, y = cast_facebook_likes))+
+  geom_point()+ 
+  labs(title="Are Facebook Likes an adquate Measure to forecast Earnings?",
+       subtitle="Correlation Between Gross Earnings and Cast Facebook Likes",
+       x = "Gross Earnings(in log scale)",
+       y = "Cast Facebook Likes Members Received (in log scale)")+
+  scale_x_log10()+
+  scale_y_log10()
+
+```
+Answer: We do not believe that the Cast's Facebook "Like" amount is a very strong predictor for the gross earnings of a movie.
+
+  - Examine the relationship between `gross` and `budget`. Produce a scatterplot and write one sentence discussing whether budget is likely to be a good predictor of how much money a movie will make at the box office.
+
+```{r, gross_on_budget}
+
+ggplot(movies, aes(x = gross, y = budget))+
+  geom_point()+ 
+  labs(title="Is budget an adquate Measure to forecast Earnings?",
+       subtitle="Correlation Between Gross Earnings and Budget",
+       x = "Gross Earnings(in log scale)",
+       y = "Budget (in log scale)")+
+  scale_x_log10()+
+  scale_y_log10()
+
+
+```
+There seems to be an overall (weak) positive correlation between gross earnings and budget. However, for for smaller budgets this relationship seems to weaken.
+  
+  
+  - Examine the relationship between `gross` and `rating`. Produce a scatterplot, faceted by `genre` and discuss whether IMDB ratings are likely to be a good predictor of how much money a movie will make at the box office. Is there anything strange in this dataset?
+
+```{r, gross_on_rating}
+
+ggplot(movies, aes(x = gross, y = rating))+
+  geom_point()+ 
+  labs(title="Are a movie's rating an adquate Measure to forecast Earnings?",
+       subtitle="Correlation Between Budget and Cast Facebook Likes",
+       x = "Gross Earnings(in log scale)",
+       y = "Rating (in log scale)")+
+  scale_x_log10()+
+  scale_y_log10()+
+  facet_wrap(~genre)
+
+```
+Action, Adventure, Comedy seem to have a stronger correlation. However, this seems to be just due to higher data availability in these genres compared to other genres. 
