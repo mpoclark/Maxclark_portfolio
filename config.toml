@@ -110,7 +110,7 @@ disqusShortname = ""
       url = "blogs/ipsum"
 
      [[params.tiles.showcase]]
-       title = "Consequat"
+       title = "IMDB Ratings"
        subtitle = "Ipsum Dolor Sit Amet"
        image = "pic05.jpg"
         url = "blogs/tempus"
