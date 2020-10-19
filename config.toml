@@ -104,8 +104,8 @@ disqusShortname = ""
       url = "blogs/beer"
 
     [[params.tiles.showcase]]
-      title = "Ipsum"
-      subtitle = "Nisl Sed Aliquam"
+      title = "IMDB movie analysis"
+      subtitle = "Film analysis"
       image = "pic10.jpg"
       url = "blogs/movie"
 
