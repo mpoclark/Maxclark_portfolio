@@ -38,7 +38,7 @@ disqusShortname = ""
   # Navigation Section
   [params.navigation]
     title = "Portfolio"
-    subtitle = "By HTML5 Up"
+    subtitle = "By Max Clark"
     menu = "Menu"
     # Optional logo as brand stored in img/
     # logo = "logo.png"
